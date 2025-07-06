@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Tracker - จัดการการเงินส่วนตัว</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Finance Tracker</span>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="nav-item active">
+                        <a href="#dashboard">
+                            <i class="fas fa-home"></i>
+                            <span>แดชบอร์ด</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#transactions">
+                            <i class="fas fa-list"></i>
+                            <span>รายการ</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#reports">
+                            <i class="fas fa-file-alt"></i>
+                            <span>รายงาน</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="main-header">
+                <div class="header-left">
+                    <h1>แดชบอร์ดการเงิน</h1>
+                    <p>จัดการรายรับ-รายจ่ายของคุณอย่างมีประสิทธิภาพ</p>
+                </div>
+                <div class="header-right">
+                    <button class="btn-add" id="addTransactionBtn">
+                        <i class="fas fa-plus"></i>
+                        เพิ่มรายการ
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <div id="dashboard-page">
+                    <!-- Summary Cards -->
+                    <section class="summary-section">
+                        <div class="summary-grid">
+                            <div class="summary-card income">
+                                <div class="card-icon">
+                                    <i class="fas fa-arrow-up"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h3>รายรับรวม</h3>
+                                    <p class="amount" id="totalIncome">0 บาท</p>
+                                    <span class="change positive">+12.5% จากเดือนที่แล้ว</span>
+                                </div>
+                            </div>
+                            <div class="summary-card expense">
+                                <div class="card-icon">
+                                    <i class="fas fa-arrow-down"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h3>รายจ่ายรวม</h3>
+                                    <p class="amount" id="totalExpense">0 บาท</p>
+                                    <span class="change negative">+8.2% จากเดือนที่แล้ว</span>
+                                </div>
+                            </div>
+                            <div class="summary-card balance">
+                                <div class="card-icon">
+                                    <i class="fas fa-wallet"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h3>คงเหลือ</h3>
+                                    <p class="amount" id="balance">0 บาท</p>
+                                    <span class="change positive">+4.3% จากเดือนที่แล้ว</span>
+                                </div>
+                            </div>
+                            <div class="summary-card savings">
+                                <div class="card-icon">
+                                    <i class="fas fa-piggy-bank"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h3>อัตราการออม</h3>
+                                    <p class="amount" id="savingsRate">0%</p>
+                                    <span class="change positive">ดีขึ้น 2.1%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!-- Quick Stats -->
+                    <section class="stats-section">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <h4>รายการเดือนนี้</h4>
+                                <p id="monthlyTransactions">0 รายการ</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4>หมวดหมู่ที่ใช้บ่อย</h4>
+                                <p id="topCategory">-</p>
+                            </div>
+                            <div class="stat-card">
+                                <h4>รายการล่าสุด</h4>
+                                <p id="lastTransaction">-</p>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div id="transactions-page" style="display:none;">
+                    <section class="transactions-section">
+                        <div class="section-header">
+                            <h3>รายการล่าสุด</h3>
+                            <button class="btn-view-all">ดูทั้งหมด</button>
+                        </div>
+                        <div class="transactions-table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>วันที่</th>
+                                        <th>รายละเอียด</th>
+                                        <th>หมวดหมู่</th>
+                                        <th>จำนวนเงิน</th>
+                                        <th>สถานะ</th>
+                                        <th>จัดการ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transactionsTableBody">
+                                    <!-- Transactions will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+                <div id="reports-page" style="display:none;">
+                    <section class="transactions-section">
+                        <div class="section-header">
+                            <h3>รายงาน</h3>
+                        </div>
+                        <div class="report-summary-cards">
+                            <div class="report-card income">
+                                <h4>รายรับรวม</h4>
+                                <p id="reportTotalIncome">0 บาท</p>
+                            </div>
+                            <div class="report-card expense">
+                                <h4>รายจ่ายรวม</h4>
+                                <p id="reportTotalExpense">0 บาท</p>
+                            </div>
+                            <div class="report-card balance">
+                                <h4>คงเหลือสุทธิ</h4>
+                                <p id="reportBalance">0 บาท</p>
+                            </div>
+                            <div class="report-card count">
+                                <h4>จำนวนรายการ</h4>
+                                <p id="reportCount">0</p>
+                            </div>
+                        </div>
+                        <div class="report-table-area">
+                            <table class="report-table">
+                                <thead>
+                                    <tr>
+                                        <th>วันที่</th>
+                                        <th>รายละเอียด</th>
+                                        <th>หมวดหมู่</th>
+                                        <th>จำนวนเงิน</th>
+                                        <th>ประเภท</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="reportTableBody">
+                                    <!-- รายการทั้งหมดจะถูกแสดงที่นี่ -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Add Transaction Modal -->
+    <div class="modal" id="transactionModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>เพิ่มรายการใหม่</h3>
+                <button class="modal-close" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="transactionForm">
+                <div class="form-group">
+                    <label>รายละเอียด</label>
+                    <input type="text" id="description" placeholder="ใส่รายละเอียดรายการ" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>จำนวนเงิน</label>
+                        <input type="number" id="amount" placeholder="0.00" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>ประเภท</label>
+                        <select id="type" required>
+                            <option value="">เลือกประเภท</option>
+                            <option value="income">รายรับ</option>
+                            <option value="expense">รายจ่าย</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>หมวดหมู่</label>
+                    <select id="category" required>
+                        <option value="">เลือกหมวดหมู่</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>วันที่</label>
+                    <input type="date" id="date" required>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" id="cancelBtn">ยกเลิก</button>
+                    <button type="submit" class="btn-primary">บันทึก</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html> 
